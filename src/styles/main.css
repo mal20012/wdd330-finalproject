@@ -1,0 +1,9 @@
+body { font-family: Arial, sans-serif; margin: 16px; }
+.app { max-width: 1000px; margin: 0 auto; }
+header h1 { margin: 0 0 16px 0; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #ddd; padding: 8px; }
+@media (max-width: 600px) {
+  .app { padding: 8px; }
+  table { font-size: 14px; }
+}
