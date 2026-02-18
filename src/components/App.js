@@ -11,21 +11,32 @@ export default function App() {
     const [symbols, setSymbols] = useState({});
     const [base, setBase] = useState('USD');
     const [rates, setRates] = useState({});
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function init() {
-            const sy = await getSymbols();
-            setSymbols(sy);
-            const latest = await getLatest(base);
-            setRates(latest.rates || {});
+            try {
+                const sy = await getSymbols();
+                setSymbols(sy);
+                const latest = await getLatest(base);
+                setRates(latest.rates || {});
+            } catch (err) {
+                console.error('Error initializing app:', err);
+                setError('Failed to load currencies. Using defaults.');
+            }
         }
         init();
     }, []);
 
     useEffect(() => {
         async function fetch() {
-            const latest = await getLatest(base);
-            setRates(latest.rates || {});
+            try {
+                const latest = await getLatest(base);
+                setRates(latest.rates || {});
+            } catch (err) {
+                console.error('Error fetching rates:', err);
+                setError('Failed to fetch exchange rates.');
+            }
         }
         fetch();
     }, [base]);
